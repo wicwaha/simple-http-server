@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	log.SetFlags(log.LUTC|log.Ldate|log.Ltime|log.Lshortfile)
+	log.SetFlags(log.LUTC | log.Ldate | log.Ltime | log.Lshortfile)
 
 	envDir := os.Getenv("WICWAHA_XCONTENT")
 	envPort := os.Getenv("WICWAHA_XPORT")
@@ -23,23 +23,27 @@ func main() {
 	if envDir != "" {
 		dir = &envDir
 	}
+
 	stat, err := os.Stat(*dir)
+
 	if err != nil || !stat.IsDir() {
-		log.Fatalf("%s is not a directory: %s", err)
+		log.Fatalf("%s is not a directory: %s", *dir, err)
 	}
 
 	if envPort != "" {
 		if i, err := strconv.Atoi(envPort); err != nil {
-			log.Fatalf("%s is not a valid port: %s", err)
+			log.Fatalf("%s is not a valid port: %s", envPort, err)
 		} else {
 			port = &i
 		}
 	}
+
 	if *port <= 1024 || *port > 65535 {
-		log.Fatalf("%d is an invalid port number", *port)
+		log.Fatalf("invalid port %d, must be between (1024, 65535]", *port)
 	}
 
 	http.Handle("/", http.FileServer(http.Dir(*dir)))
+
 	server := http.Server{
 		Addr:              fmt.Sprintf(":%d", *port),
 		TLSConfig:         nil,
@@ -49,6 +53,7 @@ func main() {
 	}
 
 	log.Printf("Listening on %s", server.Addr)
+
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("failed to serve: %s", err)
 	}
