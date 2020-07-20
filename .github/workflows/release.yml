@@ -10,10 +10,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
 
-      - name: Build
+      - name: Setup
         uses: actions/setup-go@v2
         with:
           go-version: 1.14.x
+
+      - name: Build
         run: make package
 
       - name: Create release
