@@ -6,9 +6,12 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"strconv"
 	"time"
 )
+
+var Version = "dev"
 
 func main() {
 	log.SetFlags(log.LUTC | log.Ldate | log.Ltime | log.Lshortfile)
@@ -16,9 +19,15 @@ func main() {
 	envDir := os.Getenv("WICWAHA_XCONTENT")
 	envPort := os.Getenv("WICWAHA_XPORT")
 
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", path.Base(os.Args[0]))
+		flag.PrintDefaults()
+	}
 	dir := flag.String("dir", "/content", "Directory containing content")
 	port := flag.Int("port", 5000, "Port to serve on")
 	flag.Parse()
+
+	log.Printf("%s %s", path.Base(os.Args[0]), Version)
 
 	if envDir != "" {
 		dir = &envDir

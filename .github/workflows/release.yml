@@ -1,0 +1,40 @@
+name: release
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Build
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.x
+        run: make package
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GIHUB_TOKEN: ${{ secrets.GIHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: blah
+          draft: false
+          prerelease: false
+
+      - name: Upload release
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GIHUB_TOKEN: ${{ secrets.GIHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./shttp.tar.xz
+          asset_name: shttp.tar.xz
+          asset_content_type: application/x-xz

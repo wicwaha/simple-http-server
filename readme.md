@@ -3,7 +3,7 @@
 To serve static content, simply.
 
 ```
-Usage of ./bin/simple-http-server:
+Usage of ./shttp:
   -dir string
 	Directory containing content (default "/content")
   -port int
