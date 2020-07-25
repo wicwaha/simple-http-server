@@ -7,9 +7,9 @@
 To serve static content, simply.
 
 ```
-Usage of ./shttp:
-  -dir string
-	Directory containing content (default "/content")
+Usage of shttp:
+  -content-dir string
+    	Directory to serve over HTTP (default ".")
   -port int
-	Port to serve on (default 5000)
+    	Port to serve on (default 5000)
 ```
