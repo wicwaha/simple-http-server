@@ -14,16 +14,16 @@ import (
 var Version = "dev"
 
 func main() {
-	log.SetFlags(log.LUTC | log.Ldate | log.Ltime | log.Lshortfile)
+	log.SetFlags(log.LUTC | log.Ldate | log.Ltime)
 
-	envDir := os.Getenv("WICWAHA_XCONTENT")
-	envPort := os.Getenv("WICWAHA_XPORT")
+	envDir := os.Getenv("CONTENT_DIR")
+	envPort := os.Getenv("PORT")
 
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", path.Base(os.Args[0]))
 		flag.PrintDefaults()
 	}
-	dir := flag.String("dir", "/content", "Directory containing content")
+	dir := flag.String("content-dir", ".", "Directory to serve over HTTP")
 	port := flag.Int("port", 5000, "Port to serve on")
 	flag.Parse()
 

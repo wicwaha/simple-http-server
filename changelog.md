@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2020-07-25
+
+- `-dir` argument is now `-content-dir`
+    - Default value changed from `/content` to `.`
+    - can also be provided as `CONTENT_DIR` environment variable 
+- Port can be provided as `PORT` environment variable
+- Log output no longer contains file name
+
 ## [1.0.0] - 2020-07-20
 
 - Initial release
